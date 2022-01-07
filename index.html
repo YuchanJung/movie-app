@@ -1,56 +1,58 @@
 <!DOCTYPE html>
 <html>
-    <body>
-        <div id="root"></div>
-    </body>
-    <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
-    <!--<script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>-->
-    <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone@7.16.7/babel.min.js"></script>
-    <script type="text/babel">
-        const root = document.getElementById("root");
-        function App() {
-            const [amount, setAmount] = React.useState(0);
-            const [flipped, setFlipped] = React.useState(false);
-            const onChange = (event) => {
-                //console.log(event.target.value);
-                setAmount(event.target.value);
-            };
-            const reset = () => setAmount(0);
-            const onFlip = () => {
-                reset();
-                setFlipped((current) => !current)
-            };
-            return (
+
+<body>
+    <div id="root"></div>
+</body>
+<script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+<!--<script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>-->
+<script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone@7.16.7/babel.min.js"></script>
+<script type="text/babel">
+    const root = document.getElementById("root");
+    function App() {
+        const [amount, setAmount] = React.useState(0);
+        const [inverted, setInverted] = React.useState(false);
+        const onChange = (event) => {
+            //console.log(event.target.value);
+            setAmount(event.target.value);
+        };
+        const reset = () => setAmount(0);
+        const onFlip = () => {
+            reset();
+            setInverted((current) => !current)
+        };
+        return (
+            <div>
                 <div>
-                    <div>
-                        <h1>Super Converter</h1>
-                        <label htmlFor="minutes">Minutes</label>
-                        <input 
-                            value={flipped ? amount * 60 : amount}
-                            id="minutes"
-                            placeholder="Minutes"
-                            type="number"
-                            onChange={onChange}
-                            disabled={flipped} // flipped === true
-                        />
-                    </div>
-                    <div>
-                        <label htmlFor="hours">Hours</label>
-                        <input 
-                            value={flipped ? amount : Math.round(amount/60)}
-                            id="hours"
-                            placeholder="Hours"
-                            type="number"
-                            onChange={onChange}
-                            disabled={!flipped}  // flipped === false
-                        />
-                    </div>
-                    <button onClick={reset}>Reset</button>
-                    <button onClick={onFlip}>Flip</button>
+                    <h1>Super Converter</h1>
+                    <label htmlFor="minutes">Minutes</label>
+                    <input
+                        value={inverted ? amount * 60 : amount}
+                        id="minutes"
+                        placeholder="Minutes"
+                        type="number"
+                        onChange={onChange}
+                        disabled={inverted} // inverted === true
+                    />
                 </div>
-            );
-        }
-        ReactDOM.render(<App />, root);
-    </script>
+                <div>
+                    <label htmlFor="hours">Hours</label>
+                    <input
+                        value={inverted ? amount : Math.round(amount / 60)}
+                        id="hours"
+                        placeholder="Hours"
+                        type="number"
+                        onChange={onChange}
+                        disabled={!inverted}  // inverted === false
+                    />
+                </div>
+                <button onClick={reset}>Reset</button>
+                <button onClick={onFlip}>{inverted ? "Turn back" : "Invert"}</button>
+            </div>
+        );
+    }
+    ReactDOM.render(<App />, root);
+</script>
+
 </html>
