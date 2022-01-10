@@ -9,27 +9,34 @@
 <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
 <script src="https://unpkg.com/@babel/standalone@7.16.7/babel.min.js"></script>
 <script type="text/babel">
-    function Btn({text, big}) { // 보통 인자를 props로 함. Btn으로부터 전달 받는 properties. 
+    function Btn({text, onClick}) { // 보통 인자를 props로 함. Btn으로부터 전달 받는 properties.
+        console.log(text, "was rendered"); // check rendering
         return (
-        <button style={{
+        <button 
+            onClick={onClick}
+            style={{
             backgroundColor: "tomato",
             color: "white",
             padding: "10px 20px",
             border: 0,
             borderRadius: 10,
-            fontSize: big ? 18 : 16,
-        }}>
+            }}
+        >
             {text}
         </button>
         );
     }
+    const MemorizeBtn = React.memo(Btn);
     function App() {
+        const [value, setValue] = React.useState("Save Changes");
+        const changeValue = () => setValue("Revert Changes");
         return (
             <div>
-                <Btn text="Save Changes" big={true}/>
-                <Btn text="Continue" big={false}/> 
+                <MemorizeBtn text={value} onClick={changeValue} />
+                <MemorizeBtn text="Continue" /> 
             </div>
         );
+        // component 안의 onClick은 eventListener가 아니라 props의 일종 (Button이 아니라 Btn의 컴포넌트로 들어감)
         // text -> 이름 맘대로 할 수 있음
         // == Btn({text:"continue"})
     }
