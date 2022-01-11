@@ -4,12 +4,14 @@
 <body>
     <div id="root"></div>
 </body>
-<script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
-<!--<script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>-->
+<script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+<!--<script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>-->
 <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
 <script src="https://unpkg.com/@babel/standalone@7.16.7/babel.min.js"></script>
+<script src="https://unpkg.com/prop-types@15.7.2/prop-types.js"></script>
 <script type="text/babel">
-    function Btn({text, onClick}) { // 보통 인자를 props로 함. Btn으로부터 전달 받는 properties.
+    function Btn({text, onClick, fontSize = 14}) { // 보통 인자를 props로 함. Btn으로부터 전달 받는 properties.
+        // fontSize default value = 14 
         console.log(text, "was rendered"); // check rendering
         return (
         <button 
@@ -20,6 +22,7 @@
             padding: "10px 20px",
             border: 0,
             borderRadius: 10,
+            fontSize, // fontSize: fontSize
             }}
         >
             {text}
@@ -27,13 +30,18 @@
         );
     }
     const MemorizeBtn = React.memo(Btn);
+    MemorizeBtn.propTypes = {
+        text: PropTypes.string.isRequired, // 반드시 필요한 prop 임
+        onClick: PropTypes.func,
+        fontSize: PropTypes.number,
+    }
     function App() {
         const [value, setValue] = React.useState("Save Changes");
         const changeValue = () => setValue("Revert Changes");
         return (
             <div>
-                <MemorizeBtn text={value} onClick={changeValue} />
-                <MemorizeBtn text="Continue" /> 
+                <MemorizeBtn text={value} onClick={changeValue} fontSize={18}/>
+                <MemorizeBtn text="continue" /> 
             </div>
         );
         // component 안의 onClick은 eventListener가 아니라 props의 일종 (Button이 아니라 Btn의 컴포넌트로 들어감)
