@@ -20,6 +20,7 @@ function App() {
   }
   const onSelectChange = (event) => {
     setSelected(event.target.value);
+    // coin.rank 순으로 정렬 ->  rank - 1을 index로 생각하고 접근
   };
   useEffect(() => {
     fetch("https://api.coinpaprika.com/v1/tickers")
