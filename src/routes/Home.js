@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Movie from "./components/Movie.js";
+import Movie from "../components/Movie.js"; // 파일 위치 주의
 
 function Home() {
     const [loading, setLoading] = useState(true);
